@@ -1,0 +1,19 @@
+{
+  "name": "means7",
+  "version": "0.0.1",
+  "description": "Mean Stack App for S7 communication.",
+  "dependencies": {
+    "angular": "~1.2",
+    "angular-socket-io": "",
+    "angular-resource": "~1.2",
+    "angular-mocks": "~1.2",
+    "angular-cookies": "~1.2",
+    "angular-animate": "~1.2",
+    "angular-touch": "~1.2",
+    "angular-sanitize": "~1.2",
+    "angular-ui-utils": "~0.1.1",
+    "angular-ui-router": "~0.2.11",
+    "angular-ui": "~0.4.0",
+    "angular-bootstrap": "0.12.1"
+  }
+}
