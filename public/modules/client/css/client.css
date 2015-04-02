@@ -1,0 +1,17 @@
+.views {
+    margin-top: 20px;
+}
+
+
+.buffer-form-group {
+    padding-bottom: 44px;
+}
+#text-ipv4{
+    max-width: 150px;
+}
+.buffer-input{
+    padding: 0 0;
+    width: 25px;
+    text-align: center;
+    border:0;
+}

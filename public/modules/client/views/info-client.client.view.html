@@ -1,0 +1,85 @@
+<section data-ng-controller="ClientInfoController">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel-heading">Catalog</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">Order Code</div>
+                    <div id="Code" class="col-md-5">{{ Catalog.Code }}</div>
+                    <div class="col-md-2">Version</div>
+                    <div class="col-md-2">
+                        <span id="V1">{{ Catalog.V1 }}</span>
+                        <span></span>
+                        <span id="V2">{{ Catalog.V2 }}</span>
+                        <span></span>
+                        <span id="V3">{{ Catalog.V3 }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Communication Info</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p>Max PDU size (byte)</p>
+                        </div>
+                        <div id="MaxPduLengt" class="col-md-7">{{ Catalog.commInfo.MaxPduLengt }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p>Max Native connections</p>
+                        </div>
+                        <div id="MaxConnections" class="col-md-7">{{ Catalog.commInfo.MaxConnections }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p>Max MPI rate (bps)</p>
+                        </div>
+                        <div id="MaxMpiRate" class="col-md-7">{{ Catalog.commInfo.MaxMpiRate }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p>Max comm. Bus rate (bps)</p>
+                        </div>
+                        <div id="MaxBusRate" class="col-md-7">{{ Catalog.commInfo.MaxBusRate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel-heading">Unit Info</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>Module Type name</p>
+                    </div>
+                    <div id="ModuleTypeName" class="col-md-7">{{ Catalog.unitInfo.ModuleTypeName }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>Serial number</p>
+                    </div>
+                    <div id="SerialNumber" class="col-md-7">{{ Catalog.unitInfo.SerialNumber }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>Vendor copyright</p>
+                    </div>
+                    <div id="Copyright" class="col-md-7">{{ Catalog.unitInfo.Copyright }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>AS name</p>
+                    </div>
+                    <div id="ASName" class="col-md-7">{{ Catalog.unitInfo.ASName }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>Module name</p>
+                    </div>
+                    <div id="ModuleName" class="col-md-7">{{ Catalog.unitInfo.ModuleName }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,71 @@
+<section data-ng-controller="ClientController">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="row" id="rackslot" ng-show="!PLC.tsap">
+                <div style="padding: 0px 2px;" class="col-md-3">
+                    <input id="text-rack" ng-disabled="ViewStats.btnConnect.disabled" type="text" ng-model="PLC.rack" data-toggle="tooltip" data-placement="bottom" title="" style="text-align: center;" class="form-control" data-original-title="Rack">
+                </div>
+                <div class="col-md-3" style="padding: 0px 2px;">
+                    <input id="text-slot" ng-disabled="ViewStats.btnConnect.disabled" ng-model="PLC.slot" data-toggle="tooltip" data-placement="bottom" type="text" class="form-control" title="Slot" style="text-align: center;">
+                </div>
+                <div class="col-md-6" style="padding: 0px 2px;">
+                    <select ng-model="PLC.type" id="sel-connect-as" ng-disabled="ViewStats.btnConnect.disabled" data-toggle="tooltip" data-placement="bottom" title="" class="form-control" data-original-title="Connect as...">
+                        <option value="1" selected="selected">PG</option>
+                        <option value="2">OP</option>
+                        <option value="3">S7 BASIC</option>
+                    </select>
+                </div>
+            </div>
+            <div id="tsap" class="row" ng-show="PLC.tsap">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6" style="padding: 0px 2px;">
+                            <input id="text-tsap-loc-0" ng-disabled="ViewStats.btnConnect.disabled" class="form-control" type="text" ng-model="PLC.tsapLoc0" data-toggle="tooltip" data-placement="bottom" title="Local TSAP (hex)" style="text-align: center;">
+                        </div>
+                        <div class="col-md-6" style="padding: 0px 2px;">
+                            <input id="text-tsap-loc-1" ng-disabled="ViewStats.btnConnect.disabled" class="form-control" type="text" ng-model="PLC.tsapLoc1" data-toggle="tooltip" data-placement="bottom" title="Local TSAP (hex)" style="text-align: center;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6" style="padding: 0px 2px;">
+                            <input id="text-tsap-rem-0" ng-disabled="ViewStats.btnConnect.disabled" class="form-control" type="text" ng-model="PLC.tsapRem0" data-toggle="tooltip" data-placement="bottom" title="Local TSAP (hex)" style="text-align: center;">
+                        </div>
+                        <div class="col-md-6" style="padding: 0px 2px;">
+                            <input id="text-tsap-rem-1" ng-disabled="ViewStats.btnConnect.disabled" class="form-control" type="text" ng-model="PLC.tsapRem1" data-toggle="tooltip" data-placement="bottom" title="Local TSAP (hex)" style="text-align: center;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input id="text-ipv4" ng-disabled="ViewStats.btnConnect.disabled" ng-model="PLC.ip" type="text" placeholder="IPv4-Address" class="form-control">
+                <div class="btn-group" dropdown>
+                    <button id="btn-connect" type="button" ng-click="plcConnect()" class="btn btn-default">Connect</button>
+                    <button id="btn-connect-dropdown" ng-disabled="ViewStats.btnConnect.disabled" type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Drowdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a id="btn-rackslot" ng-click="PLC.tsap = false;" href="">Rack/Slot</a></li>
+                        <li><a id="btn-tsap" ng-click="PLC.tsap = true;" href="">TSAP</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding: 0px">
+            <div ng-mouseleave="MsgPanel.closeLog()" ng-mouseenter="MsgPanel.openLog()" id="msg-panel" class="alert alert-danger" style="height: 35px; padding: 7px; margin: 0px">
+                {{ MsgPanel.msg }}
+            </div>
+            <div id="msg-popup" style="z-index: 1001; position: absolute; display: none">
+                <table id="msg-popup-table" class="table"></table>
+            </div>
+        </div>
+    </div>
+    <div class="views">
+        <ui-view class="views"></ui-view>
+    </div>
+
+</section>

@@ -1,0 +1,75 @@
+<section data-ng-controller="ClientDataRwController">
+    <div class="row">
+        <div class="col-md-2">
+          <h3>Buffer Content</h3>
+        </div>
+        <div class="col-md-10">
+            <div class="form-group buffer-form-group well-sm well">
+                <div class="col-sm-2">
+                    <label for="bufferLen">Buffer Length</label>
+                </div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" id="bufferLen" ng-model="Buffer.length">
+                    </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2">
+                    <button id="createBuffer" ng-click="createBufferTable()" class="btn btn-default btn-block" type="button">Create Buffer</button>
+                </div>
+                <div class="col-sm-2">
+                    <button id="randomBuffer" class="btn btn-default btn-block" type="button">Random Buffer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <table id="buffer" class="table">
+                <thead><tr><th></th><th>&nbsp;00</th><th>&nbsp;01</th><th>&nbsp;02</th><th>&nbsp;03</th><th>&nbsp;04</th><th>&nbsp;05</th><th>&nbsp;06</th><th>&nbsp;07</th><th>&nbsp;08</th><th>&nbsp;09</th><th>&nbsp;0A</th><th>&nbsp;0B</th><th>&nbsp;0C</th><th>&nbsp;0D</th><th>&nbsp;0E</th><th>&nbsp;0F</th></tr></thead>
+                <tbody>
+                    <tr ng-repeat="row in Buffer.rows">
+                        <td>
+                            <b>{{ row.id }}</b>
+                        </td>
+                        <td ng-repeat="col in row.col">
+                            <input maxlength="2" class="form-control buffer-input" type="text" ng-model="col.val">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <div class="well well-sm">
+                <div class="form-group">
+                    <label for="area">Area</label>
+                    <select class="form-control" id="area">
+                        <option ng-repeat="option in Area.type" value="option.value" selected="selected">{{ option.name }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dbnumber">DB Number</label>
+                    <input ng-model="Area.db" class="form-control" type="text" id="dbnumber" >
+                </div>
+                <div class="form-group">
+                    <label for="start">Start</label>
+                    <input class="form-control" type="text" id="start" ng-model="Area.start">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input class="form-control" type="text" id="amount" ng-model="Area.amount">
+                </div>
+                <div class="form-group">
+                    <label for="wordlen">Word Length</label>
+                    <select class="form-control" id="wordlen">
+                            <option ng-repeat="option in Area.length" value="option">{{ option }}</option>
+                    </select>
+                </div>
+                <p>
+                    <button id="read" ng-click="readDB()" class="btn btn-default btn-block" type="button">Read</button>
+                    <button id="write" class="btn btn-default btn-block" type="button">Write</button>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</section>

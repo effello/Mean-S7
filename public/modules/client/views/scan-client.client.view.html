@@ -1,0 +1,49 @@
+<section data-ng-controller="ClientScanController">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">Scan Results</div>
+                <div class="panel-body">
+                    <progressbar value="progress.value" max="progress.max" type="success"><b>{{progress.value}}%</b></progressbar>
+                </div>
+                <table id="ip-res" class="table table-striped">
+                    <thead></thead>
+                    <tr>
+                        <th>Port</th>
+                        <th>IP</th>
+                    </tr>
+                    <tbody id="ip-res-tbody">
+                    <tr ng-repeat="item in IpScan.hosts">
+                        <td>
+                            {{ item.port }}
+                        </td>
+                        <td>
+                            <a ng-click="setIp(item.host)"> {{ item.host }}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="well well-sm">
+                <div class="form-group">
+                    <label for="text-ip4-start">Start IP</label>
+                    <input class="form-control" type="text" id="text-ip4-start", placeholder="Start IPv4", ng-model="IpScan.startIPv4">
+                </div>
+                <div class="form-group">
+                    <label for="text-ip4-end">End IP</label>
+                    <input class="form-control" type="text" id="text-ip4-end", placeholder="End IPv4", ng-model="IpScan.endIPv4">
+                </div>
+                <div class="form-group">
+                    <label for="text-port">Port</label>
+                    <input class="form-control" ng-model="IpScan.port" type="text" id="text-port", placeholder="Port", value="{{ IpScan.port }}")>
+                </div>
+                <p>
+                    <button ng-class="{active: process.running}" id="btn-scan" ng-click="scanDevices()" class="scan-btn btn btn-default btn-block" type="button">Scan</button>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
