@@ -21,28 +21,35 @@ angular.module('client').controller('ClientDataRwController', ['Socket','$scope'
             start : 1,
             amount : 1,
             type: [
-                {   value: 'S7AreaDB',
+                {   value: 132,
                     name: 'DB'},
-                {   value: 'S7AreaPE',
+                {   value: 129,
                     name: 'Digital Inputs'},
-                {   value: 'S7AreaPA',
+                {   value: 130,
                     name: 'Digital Outputs'},
-                {   value: 'S7AreaMK',
+                {   value: 131,
                     name: 'Merker'},
-                {   value: 'S7AreaTM',
+                {   value: 29,
                     name: 'Timers'},
-                {   value: 'S7AreaCT',
+                {   value: 28,
                     name: 'Counters'}
             ],
-            selType:'',
+            selType:132,
             length : [
-                'S7WLBit',
-                'S7WLByte',
-                'S7WLWord',
-                'S7WLDWord',
-                'S7WLCounter',
-                'S7WLTimer'
-            ]
+                {   value: 1,
+                    name: 'S7WLBit'},
+                {   value: 2,
+                    name: 'S7WLByte'},
+                {   value: 4,
+                    name: 'S7WLWord'},
+                {   value: 8,
+                    name: 'S7WLDWord'},
+                {   value: 22,
+                    name: 'S7WLCounter'},
+                {   value: 29,
+                    name: 'S7WLTimer'}
+            ],
+            selLength: 2
         };
         $scope.onData = function(err, data, execTime){
             var msgExecTime = '';
@@ -50,26 +57,35 @@ angular.module('client').controller('ClientDataRwController', ['Socket','$scope'
             data=data.data;
             if(err == null){
                 if(data){
-                    createBufferTable(data.length, data);
+                    $scope.createBufferTable(data,data.length);
                 }
-                snap7log(msgExecTime + 'Data read/write OK', 'success');
+                $scope.snap7log(msgExecTime + 'Data read/write OK', 'success');
             }else{
-                snap7log(msgExecTime + err, 'danger');
+                $scope.snap7log(msgExecTime + err, 'danger');
             }
         };
-        $scope.createBufferTable = function(data){
+        $scope.createBufferTable = function(data, len){
             $scope.Buffer.rows = [];
-            var len =  $scope.Buffer.length;
-            var maxRows = Math.ceil(len/16);
+            var length =0;
+            if(!len)
+                length =  $scope.Buffer.length;
+            else
+                length = len;
+            var maxRows = Math.ceil(length/16);
             for(var i=0; i<maxRows; i++){
                 $scope.Buffer.rows.push({id:'0'+i+'0',col: []});
                 var maxCols = 15;
                 if((maxRows - 1) == i)
-                    if((maxCols = (len % 16)-1) == -1)
+                    if((maxCols = (length % 16)-1) == -1)
                         maxCols = 15;
                 for(var j=0; j<=maxCols; j++){
                     $scope.Buffer.rows[i].col.push({val: data && data[i*16+j] ? ('0'+data[i*16+j].toString(16).toUpperCase()).slice(-2) :'00'});
                 }
+            }
+        };
+        $scope.writeSuccess = function(err){
+            if(!err){
+                $scope.readDB();
             }
         };
         $scope.createBufferTable();
@@ -77,7 +93,7 @@ angular.module('client').controller('ClientDataRwController', ['Socket','$scope'
         Socket.removeAllListeners('writeArea_ret');
         Socket.removeAllListeners('getRandomBuffer_ret');
         Socket.on('readArea_ret', $scope.onData);
-        Socket.on('writeArea_ret', $scope.onData);
+        Socket.on('writeArea_ret', $scope.writeSuccess);
         Socket.on('getRandomBuffer_ret', $scope.onData);
 
         $scope.readDB = function(){
@@ -85,9 +101,26 @@ angular.module('client').controller('ClientDataRwController', ['Socket','$scope'
             var DB = $scope.Area.db;
             var start = $scope.Area.start;
             var amount = $scope.Area.amount;
-            var wordLen = $scope.Area.length;
+            var wordLen = $scope.Area.selLength;
 
             Socket.emit('readArea', {'area': +area, 'DB': +DB, 'start': +start, 'amount': +amount, 'wordLen': +wordLen});
+        };
+        $scope.writeDB = function(){
+            var area = $scope.Area.selType;
+            var DB = $scope.Area.db;
+            var start = $scope.Area.start;
+            var amount = $scope.Area.amount;
+            var wordLen = $scope.Area.selLength;
+            var buffer = [];
+
+            for(var i=0; i<(wordLen*amount/16); i++){
+                for(var j=0; j<(wordLen*amount/2);j++){
+                    buffer.push(parseInt($scope.Buffer.rows[i].col[j].val, 16));
+                }
+
+            }
+            Socket.emit('writeArea', {'area': +area, 'DB': +DB, 'start': +start, 'amount': +amount, 'wordLen': +wordLen, 'buffer': buffer});
+
         }
     }
 ]);

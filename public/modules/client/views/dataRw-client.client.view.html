@@ -41,9 +41,7 @@
             <div class="well well-sm">
                 <div class="form-group">
                     <label for="area">Area</label>
-                    <select class="form-control" id="area">
-                        <option ng-repeat="option in Area.type" value="option.value" selected="selected">{{ option.name }}</option>
-                    </select>
+                    <select class="form-control" id="area" ng-options="option.value as option.name for option in Area.type" ng-model="Area.selType"></select>
                 </div>
                 <div class="form-group">
                     <label for="dbnumber">DB Number</label>
@@ -59,13 +57,11 @@
                 </div>
                 <div class="form-group">
                     <label for="wordlen">Word Length</label>
-                    <select class="form-control" id="wordlen">
-                            <option ng-repeat="option in Area.length" value="option">{{ option }}</option>
-                    </select>
+                    <select class="form-control" id="wordlen" ng-options="option.value as option.name for option in Area.length" ng-model="Area.selLength"></select>
                 </div>
                 <p>
-                    <button id="read" ng-click="readDB()" class="btn btn-default btn-block" type="button">Read</button>
-                    <button id="write" class="btn btn-default btn-block" type="button">Write</button>
+                    <button ng-disabled="!ViewStats.btnConnect.disabled" id="read" ng-click="readDB()" class="btn btn-default btn-block" type="button">Read</button>
+                    <button ng-disabled="!ViewStats.btnConnect.disabled" id="write" ng-click="writeDB()" class="btn btn-default btn-block" type="button">Write</button>
                 </p>
 
             </div>

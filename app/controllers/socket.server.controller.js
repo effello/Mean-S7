@@ -160,5 +160,12 @@ module.exports.onConnect = function(socket){
                 socket.emit('readArea_ret', null, res.toJSON(), snap7Client.ExecTime());
         });
     });
-
+    socket.on('writeArea', function(data) {
+        snap7Client.WriteArea(data.area, data.DB, data.start, data.amount, data.wordLen, new Buffer(data.buffer), function(err) {
+            if (err)
+                socket.emit('writeArea_ret', snap7Client.ErrorText(err), null, snap7Client.ExecTime());
+            else
+                socket.emit('writeArea_ret', null, null, snap7Client.ExecTime());
+        });
+    });
 };
